@@ -8,7 +8,7 @@ const stats = [
   { value: 'Vue 3', label: 'Primary Stack' },
 ]
 const profileItems = [
-  { text: 'BSc in Information Technology', icon: 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z' },
+  { text: 'Major: Information Technology', icon: 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z' },
   { text: 'Vue 3 · Tailwind CSS · Vite', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
   { text: 'AI-driven & Dashboard Apps', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
   { text: 'Clean Code & Scalable Systems', icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' },
@@ -38,7 +38,7 @@ const profileItems = [
         <!-- Left -->
         <div class="reveal-left">
           <p class="text-slate-400 text-lg leading-relaxed mb-5">
-            I'm a Frontend Developer and UI/UX Designer with a BSc in Information Technology and over a year of hands-on experience. I specialize in
+            I'm a Frontend Developer and UI/UX Designer with a background in Information Technology and over a year of hands-on experience. I specialize in
             <span class="text-indigo-400 font-semibold">Vue 3</span>,
             <span class="text-purple-400 font-semibold">Tailwind CSS</span>, and modern frontend architecture.
           </p>
