@@ -68,7 +68,7 @@ const contactInfo = [
           <span class="w-8 h-px bg-gradient-to-r from-indigo-500 to-transparent"></span>
         </span>
         <h2 :class="['text-4xl md:text-5xl font-extrabold mb-4', isDark ? 'text-white' : 'text-slate-900']">Let's Work Together</h2>
-        <p :class="['text-lg max-w-xl mx-auto', isDark ? 'text-slate-500' : 'text-slate-500']">Have a project in mind? I'd love to hear from you.</p>
+        <p :class="['text-lg max-w-xl mx-auto', isDark ? 'text-slate-500' : 'text-slate-500']">Have a project in mind? Let's build something great together.</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-12 items-start">
@@ -77,7 +77,7 @@ const contactInfo = [
           <div>
             <h3 :class="['text-2xl font-bold mb-3', isDark ? 'text-white' : 'text-slate-900']">Ready to build something great?</h3>
             <p :class="['leading-relaxed', isDark ? 'text-slate-400' : 'text-slate-600']">
-              I'm currently available for freelance projects and full-time opportunities. Whether you need a polished UI, a Vue 3 application, or a complete design system — let's talk.
+              I'm currently available for freelance projects and full-time opportunities. Whether you need a full-stack web application, a robust backend API, a polished Vue 3 frontend, or a complete design system — let's talk.
             </p>
           </div>
 

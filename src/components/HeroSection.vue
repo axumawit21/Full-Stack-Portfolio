@@ -5,7 +5,7 @@ import { useDarkMode } from '@/composables/useDarkMode'
 const { isDark } = useDarkMode()
 const visible = ref(false)
 const typedText = ref('')
-const titles = ['Frontend Developer', 'Vue.js Specialist', 'UI/UX Designer', 'Interface Architect']
+const titles = ['Full Stack Developer', 'UI/UX Designer', 'AI-Integration', 'Prompt Engineer']
 let titleIndex = 0
 let charIndex = 0
 let isDeleting = false
@@ -79,16 +79,8 @@ const socials = [
     <!-- Content -->
     <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
 
-      <!-- Badge -->
-      <div
-        :class="['inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-10 glass-light text-sm font-medium transition-all duration-700', isDark ? 'text-slate-300' : 'text-slate-600', visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6']"
-      >
-        <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-        Available for new opportunities
-      </div>
+
+
 
       <!-- Name — smaller size -->
       <div class="overflow-hidden mb-2">
@@ -123,7 +115,7 @@ const socials = [
         :class="['text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed transition-all duration-700', isDark ? 'text-slate-500' : 'text-slate-500', visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6']"
         style="transition-delay: 0.65s;"
       >
-        Turning complex ideas into elegant, high-performance interfaces —
+        Turning complex ideas into elegant, full-stack applications —
         <span :class="['font-medium', isDark ? 'text-slate-300' : 'text-slate-700']">where clean code meets exceptional design.</span>
       </p>
 

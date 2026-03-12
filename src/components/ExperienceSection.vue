@@ -7,26 +7,29 @@ const { containerRef } = useReveal()
 
 const experiences = [
   {
-    role: 'Frontend Developer & UI/UX Designer',
+    role: 'Full Stack Developer & UI/UX Designer',
     company: 'Vite Technologies',
+    companyUrl: 'https://vitetechsolutions.com/',
     period: 'Recent',
     type: 'Work',
-    emoji: '🏢',
+    icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
     glow: 'rgba(99,102,241,0.2)',
-    description: 'Contributed to two major products — a billing dashboard and an AI-powered adaptive learning system. Led UI/UX design for the billing dashboard and handled fullstack development for the learning platform.',
+    description: 'Contributed to two major products — a billing dashboard and the AI Powered Adaptive Learning platform. Led UI/UX design for the billing dashboard and handled full-stack development with AI integration for the learning platform.',
     achievements: [
       'Designed and delivered a complete billing dashboard UI with Figma',
-      'Built the frontend of an AI-driven adaptive learning system using Vue 3',
-      'Integrated AI APIs for personalized content delivery',
+      'Developed the AI Powered Adaptive Learning platform end-to-end using the MEVN stack',
+      'Integrated AI APIs for personalized content delivery and adaptive learning paths',
+      'Built RESTful backend services with Node.js and NestJs',
       'Established reusable component libraries and design tokens',
     ],
   },
   {
     role: 'Web Development Intern',
     company: 'CodeAlpha',
+    companyUrl: 'https://www.codealpha.tech/',
     period: '3 Months',
     type: 'Internship',
-    emoji: '🎓',
+    icon: 'M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z',
     glow: 'rgba(168,85,247,0.2)',
     description: 'Completed a 3-month web development internship gaining hands-on experience building real-world web applications. Earned a certificate of completion.',
     achievements: [
@@ -77,13 +80,21 @@ const experiences = [
               <div class="relative z-10">
                 <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                   <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
                       :style="`background: linear-gradient(135deg, ${exp.glow}, transparent); border: 1px solid ${exp.glow};`">
-                      {{ exp.emoji }}
+                      <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" :d="exp.icon"/>
+                      </svg>
                     </div>
                     <div>
                       <h3 :class="['font-bold text-base', isDark ? 'text-white' : 'text-slate-900']">{{ exp.role }}</h3>
-                      <p :class="['text-sm', isDark ? 'text-slate-500' : 'text-slate-500']">{{ exp.company }}</p>
+                      <p :class="['text-sm', isDark ? 'text-slate-500' : 'text-slate-500']">
+                        <a v-if="exp.companyUrl" :href="exp.companyUrl" target="_blank" rel="noopener"
+                          :class="['hover:text-indigo-400 transition-colors duration-300 underline decoration-dotted underline-offset-2', isDark ? 'text-slate-400' : 'text-slate-500']">
+                          {{ exp.company }}
+                        </a>
+                        <span v-else>{{ exp.company }}</span>
+                      </p>
                     </div>
                   </div>
                   <div class="flex items-center gap-2 flex-shrink-0">

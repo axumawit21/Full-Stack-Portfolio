@@ -7,12 +7,25 @@ const { containerRef } = useReveal()
 
 const projects = [
   {
+    title: 'AI Powered Adaptive Learning',
+    type: 'Vite Technologies',
+    role: 'Full Stack Development & AI Integration',
+    description: 'An intelligent e-learning platform that adapts content difficulty based on learner performance using AI. Built end-to-end with Vue 3, Node.js, and AI integration.',
+    tags: ['Vue 3', 'AI Integration', 'Node.js', 'NestJs', 'REST API', 'Tailwind CSS', 'MongoDB', 'Docker'],
+    icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+    gradient: 'from-cyan-500 to-teal-600',
+    glow: 'rgba(6,182,212,0.25)',
+    highlights: ['AI-driven content adaptation', 'AI Integration for personalized learning', 'Real-time performance tracking', 'Scalable full-stack architecture'],
+    featured: true,
+    link: null,
+  },
+  {
     title: 'Rental Platform',
     type: 'Personal Project',
-    role: 'Design & Frontend Development',
+    role: 'Design & Full Stack Development',
     description: 'A full-featured property rental platform with intuitive search, listing management, and booking flows. Built with a focus on clean UX and seamless user journeys.',
-    tags: ['Vue 3', 'Tailwind CSS', 'Figma', 'REST API'],
-    emoji: '🏠',
+    tags: ['Vue 3', 'Express.js', 'MongoDB', 'Tailwind CSS', 'Figma', 'REST API'],
+    icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
     gradient: 'from-indigo-500 to-blue-600',
     glow: 'rgba(99,102,241,0.25)',
     highlights: ['Responsive property listings', 'Advanced search & filters', 'Booking flow UX'],
@@ -21,10 +34,10 @@ const projects = [
   {
     title: 'Billing Dashboard',
     type: 'Vite Technologies',
-    role: 'UI/UX Design',
+    role: 'Design & Frontend Development',
     description: 'A comprehensive billing and invoicing dashboard for internal business operations. Complex financial data presented through clean, scannable interfaces.',
-    tags: ['Figma', 'Design Systems', 'Prototyping', 'User Flows'],
-    emoji: '📊',
+    tags: ['Figma', 'Vue 3', 'Prototyping', 'Tailwind CSS'],
+    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
     gradient: 'from-purple-500 to-pink-600',
     glow: 'rgba(168,85,247,0.25)',
     highlights: ['Data visualization design', 'Component design system', 'User flow optimization'],
@@ -33,28 +46,16 @@ const projects = [
   {
     title: 'Attention Tracker',
     type: 'Personal Project',
-    role: 'Design & Frontend Development',
+    role: 'Frontend Development',
     description: 'A focus and productivity application that helps users track attention spans, analyze concentration patterns, and build better focus habits through data-driven insights.',
     tags: ['Vue 3', 'Tailwind CSS', 'Chart.js', 'Pinia'],
-    emoji: '🎯',
+    icon: 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z',
     gradient: 'from-amber-500 to-orange-600',
     glow: 'rgba(245,158,11,0.25)',
     highlights: ['Focus session tracking', 'Attention analytics dashboard', 'Streak & score system'],
     link: 'https://attention-tracker.netlify.app/',
   },
-  {
-    title: 'AI Adaptive Learning',
-    type: 'Vite Technologies',
-    role: 'Fullstack Development',
-    description: 'An intelligent e-learning platform that adapts content difficulty based on learner performance using AI. Built end-to-end with Vue 3 and AI integration.',
-    tags: ['Vue 3', 'AI Integration', 'Node.js', 'REST API', 'Tailwind CSS'],
-    emoji: '🤖',
-    gradient: 'from-cyan-500 to-teal-600',
-    glow: 'rgba(6,182,212,0.25)',
-    highlights: ['AI-driven content adaptation', 'Real-time performance tracking', 'Scalable architecture'],
-    featured: true,
-    link: null,
-  },
+  
 ]
 </script>
 
@@ -76,7 +77,7 @@ const projects = [
       </div>
 
       <!-- Project Cards -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 gap-6">
         <a
           v-for="(project, i) in projects"
           :key="project.title"
@@ -103,9 +104,11 @@ const projects = [
 
           <div class="relative z-10">
             <!-- Icon -->
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-5 transition-transform duration-300 group-hover:scale-110"
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
               :style="`background: linear-gradient(135deg, ${project.glow.replace('0.25','0.15')}, transparent); border: 1px solid ${project.glow};`">
-              {{ project.emoji }}
+              <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" :d="project.icon"/>
+              </svg>
             </div>
 
             <span :class="['inline-block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-600' : 'text-slate-400']">{{ project.type }}</span>
