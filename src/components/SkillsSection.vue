@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useReveal } from '@/composables/useFadeUp'
+import { useDarkMode } from '@/composables/useDarkMode'
 
+const { isDark } = useDarkMode()
 const { containerRef } = useReveal()
 const barsVisible = ref(false)
 
@@ -67,20 +69,20 @@ const softSkills = [
 
 <template>
   <section id="skills" class="section-padding relative overflow-hidden">
-    <div class="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.025)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+    <div :class="['absolute inset-0', isDark ? 'bg-[linear-gradient(rgba(99,102,241,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.025)_1px,transparent_1px)]' : 'bg-[linear-gradient(rgba(99,102,241,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.04)_1px,transparent_1px)]']" style="background-size: 50px 50px;"></div>
     <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[700px] h-40 pointer-events-none"
-      style="background: radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%);"></div>
+      :style="`background: radial-gradient(ellipse, rgba(99,102,241,${isDark ? '0.08' : '0.06'}) 0%, transparent 70%);`"></div>
 
     <div ref="containerRef" class="max-w-6xl mx-auto px-6 relative z-10">
-      <!-- Section Title — always visible -->
+      <!-- Section Title -->
       <div class="text-center mb-16">
         <span class="inline-flex items-center gap-2 text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-4">
           <span class="w-8 h-px bg-gradient-to-r from-transparent to-indigo-500"></span>
           Expertise
           <span class="w-8 h-px bg-gradient-to-r from-indigo-500 to-transparent"></span>
         </span>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Skills & Technologies</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto">A curated set of tools I use to build modern, scalable web applications.</p>
+        <h2 :class="['text-4xl md:text-5xl font-extrabold mb-4', isDark ? 'text-white' : 'text-slate-900']">Skills & Technologies</h2>
+        <p :class="['text-lg max-w-xl mx-auto', isDark ? 'text-slate-500' : 'text-slate-500']">A curated set of tools I use to build modern, scalable web applications.</p>
       </div>
 
       <!-- Skill Cards -->
@@ -100,16 +102,16 @@ const softSkills = [
                 :style="`background: linear-gradient(135deg, ${cat.glow.replace('0.25','0.2')}, transparent); border: 1px solid ${cat.glow};`">
                 {{ cat.icon }}
               </div>
-              <h3 class="font-bold text-white text-base">{{ cat.title }}</h3>
+              <h3 :class="['font-bold text-base', isDark ? 'text-white' : 'text-slate-900']">{{ cat.title }}</h3>
             </div>
 
             <div class="space-y-4">
               <div v-for="skill in cat.skills" :key="skill.name">
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-sm font-medium text-slate-300">{{ skill.name }}</span>
-                  <span class="text-xs text-slate-600 font-mono">{{ skill.level }}%</span>
+                  <span :class="['text-sm font-medium', isDark ? 'text-slate-300' : 'text-slate-700']">{{ skill.name }}</span>
+                  <span :class="['text-xs font-mono', isDark ? 'text-slate-600' : 'text-slate-400']">{{ skill.level }}%</span>
                 </div>
-                <div class="h-1.5 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.05);">
+                <div class="h-1.5 rounded-full overflow-hidden" :style="`background: ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'};`">
                   <div
                     :class="`h-full rounded-full bg-gradient-to-r ${cat.gradient} transition-all duration-1000 ease-out`"
                     :style="{ width: barsVisible ? skill.level + '%' : '0%' }"
@@ -121,14 +123,14 @@ const softSkills = [
         </div>
       </div>
 
-      <!-- Soft Skills — always visible, no reveal-clip -->
+      <!-- Soft Skills -->
       <div class="text-center">
-        <p class="text-slate-600 text-xs font-semibold tracking-widest uppercase mb-5">Soft Skills</p>
+        <p :class="['text-xs font-semibold tracking-widest uppercase mb-5', isDark ? 'text-slate-600' : 'text-slate-500']">Soft Skills</p>
         <div class="flex flex-wrap justify-center gap-3">
           <div
             v-for="(skill, i) in softSkills"
             :key="skill.name"
-            class="flex items-center gap-2 px-4 py-2 glass-light rounded-full text-sm font-medium text-slate-400 hover:text-white hover:border-indigo-500/30 transition-all duration-300 hover:-translate-y-1 cursor-default"
+            :class="['flex items-center gap-2 px-4 py-2 glass-light rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-1 cursor-default', isDark ? 'text-slate-400 hover:text-white hover:border-indigo-500/30' : 'text-slate-600 hover:text-slate-900 hover:border-indigo-500/20']"
           >
             <span>{{ skill.icon }}</span>
             {{ skill.name }}

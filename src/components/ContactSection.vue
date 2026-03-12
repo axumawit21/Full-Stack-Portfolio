@@ -1,24 +1,53 @@
 <script setup>
 import { ref } from 'vue'
 import { useReveal } from '@/composables/useFadeUp'
+import { useDarkMode } from '@/composables/useDarkMode'
 
+const { isDark } = useDarkMode()
 const { containerRef } = useReveal()
 const form = ref({ name: '', email: '', subject: '', message: '' })
 const isSubmitting = ref(false)
 const submitted = ref(false)
+const errorMsg = ref('')
+
+const WEB3FORMS_KEY = 'd6cc95e2-9561-4fc4-b2dd-719fd6b6b1cd'
 
 const handleSubmit = async () => {
   isSubmitting.value = true
-  await new Promise(r => setTimeout(r, 1500))
-  isSubmitting.value = false
-  submitted.value = true
-  form.value = { name: '', email: '', subject: '', message: '' }
-  setTimeout(() => { submitted.value = false }, 5000)
+  errorMsg.value = ''
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        name: form.value.name,
+        email: form.value.email,
+        subject: form.value.subject,
+        message: form.value.message,
+      }),
+    })
+
+    const data = await res.json()
+
+    if (data.success) {
+      submitted.value = true
+      form.value = { name: '', email: '', subject: '', message: '' }
+      setTimeout(() => { submitted.value = false }, 5000)
+    } else {
+      errorMsg.value = 'Something went wrong. Please try again.'
+    }
+  } catch {
+    errorMsg.value = 'Network error. Please try again.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 const contactInfo = [
   { icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Email', value: 'axumawitleake@gmail.com', href: 'mailto:axumawitleake@gmail.com' },
-  { icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', label: 'Location', value: 'Mekelle, Ethiopia', href: null },
+  { icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', label: 'Location', value: 'Ethiopia', href: null },
   { icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', label: 'Availability', value: 'Open to opportunities', href: null },
 ]
 </script>
@@ -26,28 +55,28 @@ const contactInfo = [
 <template>
   <section id="contact" class="section-padding relative overflow-hidden">
     <div class="absolute top-0 left-0 w-96 h-96 pointer-events-none"
-      style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);"></div>
+      :style="`background: radial-gradient(circle, rgba(99,102,241,${isDark ? '0.07' : '0.05'}) 0%, transparent 70%);`"></div>
     <div class="absolute bottom-0 right-0 w-80 h-80 pointer-events-none"
-      style="background: radial-gradient(circle, rgba(168,85,247,0.05) 0%, transparent 70%);"></div>
+      :style="`background: radial-gradient(circle, rgba(168,85,247,${isDark ? '0.05' : '0.03'}) 0%, transparent 70%);`"></div>
 
     <div ref="containerRef" class="max-w-6xl mx-auto px-6 relative z-10">
-      <!-- Section Title — always visible -->
+      <!-- Section Title -->
       <div class="text-center mb-16">
         <span class="inline-flex items-center gap-2 text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-4">
           <span class="w-8 h-px bg-gradient-to-r from-transparent to-indigo-500"></span>
           Contact
           <span class="w-8 h-px bg-gradient-to-r from-indigo-500 to-transparent"></span>
         </span>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Let's Work Together</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto">Have a project in mind? I'd love to hear from you.</p>
+        <h2 :class="['text-4xl md:text-5xl font-extrabold mb-4', isDark ? 'text-white' : 'text-slate-900']">Let's Work Together</h2>
+        <p :class="['text-lg max-w-xl mx-auto', isDark ? 'text-slate-500' : 'text-slate-500']">Have a project in mind? I'd love to hear from you.</p>
       </div>
 
       <div class="grid md:grid-cols-2 gap-12 items-start">
         <!-- Left -->
         <div class="reveal-left space-y-8">
           <div>
-            <h3 class="text-2xl font-bold text-white mb-3">Ready to build something great?</h3>
-            <p class="text-slate-400 leading-relaxed">
+            <h3 :class="['text-2xl font-bold mb-3', isDark ? 'text-white' : 'text-slate-900']">Ready to build something great?</h3>
+            <p :class="['leading-relaxed', isDark ? 'text-slate-400' : 'text-slate-600']">
               I'm currently available for freelance projects and full-time opportunities. Whether you need a polished UI, a Vue 3 application, or a complete design system — let's talk.
             </p>
           </div>
@@ -64,21 +93,21 @@ const contactInfo = [
                 </svg>
               </div>
               <div>
-                <p class="text-xs text-slate-600 font-medium">{{ info.label }}</p>
-                <p class="text-sm font-semibold text-slate-300">{{ info.value }}</p>
+                <p :class="['text-xs font-medium', isDark ? 'text-slate-600' : 'text-slate-400']">{{ info.label }}</p>
+                <p :class="['text-sm font-semibold', isDark ? 'text-slate-300' : 'text-slate-700']">{{ info.value }}</p>
               </div>
             </a>
           </div>
 
           <div class="flex gap-3">
             <a href="https://github.com/axumawit21" target="_blank" rel="noopener"
-              class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white glass-light hover:border-slate-500/40 transition-all duration-300 hover:-translate-y-1">
+              :class="['flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold glass-light hover:border-slate-500/40 transition-all duration-300 hover:-translate-y-1', isDark ? 'text-white' : 'text-slate-900']">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
               </svg>
               GitHub
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener"
+            <a href="https://www.linkedin.com/in/axumawit-leake-38934626b" target="_blank" rel="noopener"
               class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-1"
               style="background: rgba(37,99,235,0.15); border: 1px solid rgba(37,99,235,0.25);">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -101,34 +130,43 @@ const contactInfo = [
                 Message sent! I'll get back to you soon.
               </div>
             </Transition>
+            <Transition name="fade">
+              <div v-if="errorMsg" class="flex items-center gap-3 p-4 rounded-xl text-red-400 text-sm font-medium"
+                style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                {{ errorMsg }}
+              </div>
+            </Transition>
 
             <div class="grid sm:grid-cols-2 gap-5">
               <div>
-                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Name</label>
+                <label :class="['block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-500' : 'text-slate-500']">Name</label>
                 <input v-model="form.name" type="text" required placeholder="Your name"
-                  class="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all"
-                  style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);" />
+                  :class="['w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all', isDark ? 'text-white placeholder-slate-700' : 'text-slate-900 placeholder-slate-400']"
+                  :style="`background: ${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'}; border: 1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)'};`" />
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Email</label>
+                <label :class="['block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-500' : 'text-slate-500']">Email</label>
                 <input v-model="form.email" type="email" required placeholder="your@email.com"
-                  class="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all"
-                  style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);" />
+                  :class="['w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all', isDark ? 'text-white placeholder-slate-700' : 'text-slate-900 placeholder-slate-400']"
+                  :style="`background: ${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'}; border: 1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)'};`" />
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Subject</label>
+              <label :class="['block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-500' : 'text-slate-500']">Subject</label>
               <input v-model="form.subject" type="text" required placeholder="Project inquiry, collaboration..."
-                class="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all"
-                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);" />
+                :class="['w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all', isDark ? 'text-white placeholder-slate-700' : 'text-slate-900 placeholder-slate-400']"
+                :style="`background: ${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'}; border: 1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)'};`" />
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">Message</label>
+              <label :class="['block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-500' : 'text-slate-500']">Message</label>
               <textarea v-model="form.message" required rows="5" placeholder="Tell me about your project..."
-                class="w-full px-4 py-3 rounded-xl text-sm text-white placeholder-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all resize-none"
-                style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);"></textarea>
+                :class="['w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all resize-none', isDark ? 'text-white placeholder-slate-700' : 'text-slate-900 placeholder-slate-400']"
+                :style="`background: ${isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'}; border: 1px solid ${isDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.08)'};`"></textarea>
             </div>
 
             <button type="submit" :disabled="isSubmitting"

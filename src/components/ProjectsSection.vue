@@ -1,5 +1,8 @@
 <script setup>
 import { useReveal } from '@/composables/useFadeUp'
+import { useDarkMode } from '@/composables/useDarkMode'
+
+const { isDark } = useDarkMode()
 const { containerRef } = useReveal()
 
 const projects = [
@@ -25,7 +28,19 @@ const projects = [
     gradient: 'from-purple-500 to-pink-600',
     glow: 'rgba(168,85,247,0.25)',
     highlights: ['Data visualization design', 'Component design system', 'User flow optimization'],
-    link: 'https://www.figma.com/proto/1nlywH4sX8gvnvS7aUPMJM/Billing?node-id=3-5&t=JdiuB8l6sKWpXjhH-1',
+    link: 'https://billing-dashboardd.netlify.app/',
+  },
+  {
+    title: 'Attention Tracker',
+    type: 'Personal Project',
+    role: 'Design & Frontend Development',
+    description: 'A focus and productivity application that helps users track attention spans, analyze concentration patterns, and build better focus habits through data-driven insights.',
+    tags: ['Vue 3', 'Tailwind CSS', 'Chart.js', 'Pinia'],
+    emoji: '🎯',
+    gradient: 'from-amber-500 to-orange-600',
+    glow: 'rgba(245,158,11,0.25)',
+    highlights: ['Focus session tracking', 'Attention analytics dashboard', 'Streak & score system'],
+    link: 'https://attention-tracker.netlify.app/',
   },
   {
     title: 'AI Adaptive Learning',
@@ -46,18 +61,18 @@ const projects = [
 <template>
   <section id="projects" class="section-padding relative overflow-hidden">
     <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-64 pointer-events-none"
-      style="background: radial-gradient(ellipse, rgba(99,102,241,0.05) 0%, transparent 70%);"></div>
+      :style="`background: radial-gradient(ellipse, rgba(99,102,241,${isDark ? '0.05' : '0.04'}) 0%, transparent 70%);`"></div>
 
     <div ref="containerRef" class="max-w-6xl mx-auto px-6 relative z-10">
-      <!-- Section Title — always visible -->
+      <!-- Section Title -->
       <div class="text-center mb-16">
         <span class="inline-flex items-center gap-2 text-indigo-400 text-sm font-semibold tracking-widest uppercase mb-4">
           <span class="w-8 h-px bg-gradient-to-r from-transparent to-indigo-500"></span>
           Portfolio
           <span class="w-8 h-px bg-gradient-to-r from-indigo-500 to-transparent"></span>
         </span>
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Selected Projects</h2>
-        <p class="text-slate-500 text-lg max-w-xl mx-auto">Real-world applications built with modern technologies and strong UX focus.</p>
+        <h2 :class="['text-4xl md:text-5xl font-extrabold mb-4', isDark ? 'text-white' : 'text-slate-900']">Selected Projects</h2>
+        <p :class="['text-lg max-w-xl mx-auto', isDark ? 'text-slate-500' : 'text-slate-500']">Real-world applications built with modern technologies and strong UX focus.</p>
       </div>
 
       <!-- Project Cards -->
@@ -93,13 +108,13 @@ const projects = [
               {{ project.emoji }}
             </div>
 
-            <span class="inline-block text-xs font-semibold text-slate-600 uppercase tracking-widest mb-2">{{ project.type }}</span>
-            <h3 class="text-lg font-bold text-white mb-1">{{ project.title }}</h3>
+            <span :class="['inline-block text-xs font-semibold uppercase tracking-widest mb-2', isDark ? 'text-slate-600' : 'text-slate-400']">{{ project.type }}</span>
+            <h3 :class="['text-lg font-bold mb-1', isDark ? 'text-white' : 'text-slate-900']">{{ project.title }}</h3>
             <p class="text-sm font-semibold mb-3 text-gradient">{{ project.role }}</p>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">{{ project.description }}</p>
+            <p :class="['text-sm leading-relaxed mb-4', isDark ? 'text-slate-400' : 'text-slate-600']">{{ project.description }}</p>
 
             <ul class="space-y-1.5 mb-5">
-              <li v-for="h in project.highlights" :key="h" class="flex items-center gap-2 text-xs text-slate-500">
+              <li v-for="h in project.highlights" :key="h" :class="['flex items-center gap-2 text-xs', isDark ? 'text-slate-500' : 'text-slate-500']">
                 <svg class="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4"/>
                 </svg>
@@ -109,8 +124,8 @@ const projects = [
 
             <div class="flex flex-wrap gap-2">
               <span v-for="tag in project.tags" :key="tag"
-                class="text-xs px-2.5 py-1 rounded-full font-medium text-slate-500 hover:text-indigo-400 transition-colors cursor-default"
-                style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);">
+                :class="['text-xs px-2.5 py-1 rounded-full font-medium transition-colors cursor-default', isDark ? 'text-slate-500 hover:text-indigo-400' : 'text-slate-500 hover:text-indigo-600']"
+                :style="`background: ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(99,102,241,0.06)'}; border: 1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(99,102,241,0.12)'};`">
                 {{ tag }}
               </span>
             </div>
