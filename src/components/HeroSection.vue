@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import profileImg from '@/assets/portfolio img.png'
+import cvPdf from '@/assets/Axumawit Leake CV.pdf'
 
 const visible = ref(false)
 
@@ -58,6 +59,13 @@ const personalInfo = [
             <a href="#portfolio"
               class="btn-outline inline-flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-slate-300 text-sm">
               View my work
+            </a>
+            <a :href="cvPdf" target="_blank" rel="noopener"
+              class="btn-cv inline-flex items-center gap-2 px-7 py-3 rounded-xl font-bold text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+              </svg>
+              Download CV
             </a>
           </div>
         </div>
