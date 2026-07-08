@@ -4,7 +4,7 @@ export function useReveal() {
     const containerRef = ref(null)
     let observer = null
 
-    const SELECTORS = '.reveal-clip, .reveal-left, .reveal-right, .reveal-scale, .reveal-flip'
+    const SELECTORS = '.reveal-clip, .reveal-left, .reveal-right, .reveal-scale, .reveal-flip, .reveal-up'
 
     onMounted(async () => {
         // Wait for DOM to fully render
